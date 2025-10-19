@@ -9,7 +9,7 @@ Um jogo de Halloween divertido para jogar com amigos no celular! Complete tarefa
 1. Digite seu nome e clique em **Começar o Desafio**.
 2. Cada jogador recebe 5 tarefas aleatórias.
 3. Marque **✅ Concluída** quando realizar a tarefa (+1 ponto).
-4. Marque **👻 Adivinhada** se você acha que alguém está fazendo a tarefa:
+4. Marque **👻 Adivinhada** alguém adivinhar sua tarefa:
    - Acertou → ganha 1 ponto
    - Errou → perde 1 ponto
 5. Tarefas concluídas desaparecem da lista.
