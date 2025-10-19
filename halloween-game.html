@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+<title>🎃 Desafio Assombrado 🎃</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Creepster&family=Poppins:wght@400;600&display=swap');
+
+:root {
+  --bg: #0b0012;
+  --card-bg: rgba(30, 0, 40, 0.88);
+  --accent: #ff7518;
+  --accent-light: #ffa94d;
+  --success: #00ffb3;
+  --danger: #ff4040;
+  --text: #f5f5f5;
+}
+
+/* ---- Base ---- */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: radial-gradient(circle at top, #16001b, var(--bg));
+  font-family: 'Poppins', sans-serif;
+  color: var(--text);
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+h1 {
+  font-family: 'Creepster', cursive;
+  color: var(--accent);
+  font-size: clamp(2rem, 6vw, 2.6rem);
+  text-shadow: 0 0 15px var(--accent-light);
+  margin-top: 1.2rem;
+  text-align: center;
+  animation: flicker 2s infinite;
+}
+
+@keyframes flicker {
+  0%, 100% { opacity: 1; text-shadow: 0 0 15px var(--accent-light); }
+  50% { opacity: 0.8; text-shadow: 0 0 5px var(--accent); }
+}
+
+/* ---- Container ---- */
+.container {
+  width: 92%;
+  max-width: 420px;
+  background: var(--card-bg);
+  border: 1px solid var(--accent);
+  border-radius: 18px;
+  box-shadow: 0 0 25px rgba(255, 117, 24, 0.3);
+  margin-top: 1rem;
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+}
+
+.container::-webkit-scrollbar {
+  display: none;
+}
+
+/* ---- Inputs & Buttons ---- */
+input {
+  width: 100%;
+  padding: 1rem;
+  border: none;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  outline: none;
+  background: rgba(255,255,255,0.08);
+  color: var(--text);
+}
+
+button {
+  background: var(--accent);
+  color: #000;
+  border: none;
+  padding: 1rem;
+  width: 100%;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 1.05rem;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+button:hover {
+  background: var(--accent-light);
+}
+
+/* ---- Tasks ---- */
+.task {
+  background: rgba(255, 117, 24, 0.07);
+  border: 1px solid rgba(255, 117, 24, 0.3);
+  border-radius: 14px;
+  padding: 1rem;
+  margin: 0.8rem 0;
+  width: 100%;
+  text-align: left;
+  box-shadow: 0 0 8px rgba(255, 117, 24, 0.15);
+  transition: 0.3s;
+}
+
+.task h3 {
+  font-size: clamp(0.95rem, 3.8vw, 1.1rem);
+  color: var(--accent-light);
+  margin-bottom: 0.6rem;
+  word-break: break-word;
+}
+
+.taskBtns {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.taskBtns button {
+  flex: 1;
+  font-size: 0.95rem;
+  padding: 0.9rem;
+  border-radius: 10px;
+  font-weight: 600;
+  min-width: 45%;
+}
+
+.taskBtns .done {
+  background: var(--success);
+}
+
+.taskBtns .guess {
+  background: var(--danger);
+  color: #fff;
+}
+
+/* ---- Score & Footer ---- */
+#score {
+  font-size: 1.3rem;
+  color: var(--success);
+  text-shadow: 0 0 8px var(--success);
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.rules {
+  background: rgba(40, 0, 60, 0.9);
+  border: 1px solid #ff7518;
+  border-radius: 14px;
+  padding: 1rem 1.2rem;
+  margin: 1rem 0 2rem;
+  color: #f5f5f5;
+  text-align: left;
+  max-width: 420px;
+  width: 92%;
+  box-shadow: 0 0 5px rgba(255, 117, 24, 0.25);
+}
+
+.rules h2 {
+  font-family: 'Creepster', cursive;
+  color: #ff7518;
+  font-size: clamp(1.3rem, 5vw, 1.8rem);
+  margin-bottom: 0.8rem;
+  text-align: center;
+}
+
+.rules ul {
+  padding-left: 1.2rem;
+  list-style: disc;
+}
+
+.rules li {
+  margin-bottom: 1rem;
+  padding: 5px;
+  text-align: center;
+  list-style: none;
+  font-size: clamp(0.9rem, 4vw, 1rem);
+}
+
+footer {
+  font-size: 0.85rem;
+  opacity: 0.6;
+  margin: 1.2rem 0;
+  text-align: center;
+}
+</style>
+</head>
+<body>
+
+<h1>🎃 Trick or Task 🎃</h1>
+
+<div class="container">
+  <input id="playerName" placeholder="Digite seu nome..." />
+  <button id="startBtn">Começar o Desafio</button>
+
+  <div id="tasks"></div>
+  <div id="score"></div>
+</div>
+
+<div class="rules">
+  <h2>📜 Regras do Trick or Task</h2>
+  <ul>
+    <li>Cada jogador recebe 5 tarefas aleatórias ao entrar no jogo.</li>
+    <li>Marque ✅ Concluída quando realizar a tarefa e ganhe 1 ponto.</li>
+    <li>Marque 👻 Adivinhada se você acha que alguém está fazendo a tarefa. Se acertar, ganha 1 ponto; se errar, perde 1 ponto.</li>
+    <li>As tarefas já concluídas desaparecem da sua lista.</li>
+    <li>O jogo é para se divertir e assustar os amigos! 👻</li>
+  </ul>
+</div>
+
+<footer>👻 Faça suas tarefas... se tiver coragem!</footer>
+
+<script>
+const tasksPool = [
+  // 🍬 Clássicas e leves
+  "Servir um refrigerante",
+  "Dar um high five",
+  "Fazer alguém dizer 'Bazinga!'",
+  "Contar uma piada ruim",
+  "Gritar 'Buuu!'",
+  "Oferecer um doce",
+  "Fazer alguém dançar 3 segundos",
+  "Fazer uma careta",
+  "Assustar alguém",
+  "Rir de forma assustadora",
+
+  // 🎭 Interativas e engraçadas
+  "Imitar um personagem de terror por 10 segundos",
+  "Fazer uma pose de fantasma",
+  "Falar com voz assustadora por 1 minuto",
+  "Fingir que é um zumbi e andar pela sala",
+  "Dar um susto em alguém sem ser pego",
+  "Fazer alguém rir sem falar nada",
+  "Fazer um brinde dramático como se fosse um vampiro",
+  "Contar um segredo falso e ver se alguém acredita",
+  "Fazer um discurso como se tivesse ganhado um Oscar de terror",
+  "Fingir que está sendo possuído por 5 segundos",
+
+  // 🍿 Coisas de grupo
+  "Fazer alguém mudar de lugar no sofá",
+  "Fazer alguém cantar uma música de Halloween",
+  "Convencer alguém a te dar um doce (sem explicar o porquê)",
+  "Fazer alguém repetir tudo o que você disser por 10 segundos",
+  "Fazer alguém falar uma palavra difícil sem perceber",
+  "Fazer alguém imitar um gato assustado",
+  "Fazer alguém gritar junto com você",
+  "Fazer uma dancinha em grupo",
+  "Inventar um feitiço e lançar em alguém",
+  "Fazer alguém acreditar que há um inseto perto",
+
+  // 💀 Um pouco de desafio
+  "Falar uma frase inteira sem usar vogais",
+  "Contar uma história de terror em 10 segundos",
+  "Fazer uma cara de medo convincente",
+  "Falar apenas com rimas por 30 segundos",
+  "Inventar um nome assustador para cada pessoa no grupo",
+  "Fazer alguém dizer 'Doce ou travessura!'",
+  "Convencer alguém a fechar os olhos por 5 segundos",
+  "Fazer alguém repetir uma frase engraçada 3 vezes seguidas",
+  "Fingir que está em um filme de terror por 15 segundos",
+  "Fazer uma risada maléfica convincente"
+];
+
+
+const tasksDiv = document.getElementById("tasks");
+const scoreDiv = document.getElementById("score");
+const startBtn = document.getElementById("startBtn");
+const playerInput = document.getElementById("playerName");
+let player = null;
+
+function generateTasks() {
+  const shuffled = [...tasksPool].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, 5).map(task => ({ text: task, done: false }));
+}
+
+function loadPlayer() {
+  const saved = localStorage.getItem("spookyPlayer");
+  if (saved) {
+    player = JSON.parse(saved);
+    showTasks();
+  }
+}
+
+function savePlayer() {
+  localStorage.setItem("spookyPlayer", JSON.stringify(player));
+}
+
+function showTasks() {
+  tasksDiv.innerHTML = "";
+  const remaining = player.tasks.filter(t => !t.done);
+  if (remaining.length === 0) {
+    tasksDiv.innerHTML = "<p style='margin-top:1rem;text-align:center;'>✨ Todas as tarefas foram concluídas! ✨</p>";
+  } else {
+    remaining.forEach((task, i) => {
+      const div = document.createElement("div");
+      div.className = "task";
+      div.innerHTML = `
+        <h3>${task.text}</h3>
+        <div class="taskBtns">
+          <button class="done" onclick="completeTask(${i})">✅ Concluída</button>
+          <button class="guess" onclick="guessTask(${i})">👻 Adivinhada</button>
+        </div>
+      `;
+      tasksDiv.appendChild(div);
+    });
+  }
+  updateScore();
+}
+
+function completeTask(index) {
+  const remaining = player.tasks.filter(t => !t.done);
+  if (remaining[index]) {
+    remaining[index].done = true;
+    player.score++;
+    updateTasks(remaining);
+  }
+}
+
+function guessTask(index) {
+  const remaining = player.tasks.filter(t => !t.done);
+  if (remaining[index]) {
+    remaining[index].done = true;
+    player.score--;
+    updateTasks(remaining);
+  }
+}
+
+function updateTasks(updatedRemaining) {
+  player.tasks = player.tasks.map(t => {
+    const match = updatedRemaining.find(r => r.text === t.text);
+    return match ? match : { ...t, done: true };
+  });
+  savePlayer();
+  showTasks();
+}
+
+function updateScore() {
+  scoreDiv.textContent = `🎯 Pontos: ${player.score}`;
+}
+
+startBtn.onclick = () => {
+  const name = playerInput.value.trim();
+  if (!name) return alert("Digite seu nome primeiro!");
+  player = { name, score: 0, tasks: generateTasks() };
+  savePlayer();
+  showTasks();
+};
+</script>
+
+</body>
+</html>
