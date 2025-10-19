@@ -1,4 +1,4 @@
-# 🎃 Desafio Assombrado
+# 🎃 Trick or Task
 
 Um jogo de Halloween divertido para jogar com amigos no celular! Complete tarefas assustadoras, tente adivinhar o que os outros estão fazendo e acumule pontos para se tornar o mestre do terror da noite.
 
